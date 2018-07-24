@@ -355,9 +355,9 @@ static void gatherParametersAndBuffers(std::vector<at::Tensor*> & values, const 
 }
 
 py::object runMethodFromPython(Method& m, py::args args) {
-  auto inputs = createVariableTensorList(args);
-  auto outputs = m.run(std::move(inputs));
-  return unpackVariableTensorList(std::move(outputs));
+  auto stack = createStack(args);
+  m.run(stack);
+  return wrapStack(std::move(stack));
 }
 
 void initJitScriptBindings(PyObject* module) {
@@ -469,7 +469,7 @@ void initJitScriptBindings(PyObject* module) {
       })
       .def("graph_for", [](Module& self, py::args args) {
         if (self.find_method("forward")) {
-          return self.get_method("forward").graph_for(createVariableTensorList(args));
+          return self.get_method("forward").graph_for(createStack(args));
         }
         throw std::runtime_error("Attempted to call graph_for on a Module without a compiled forward()");
       })
@@ -497,7 +497,7 @@ void initJitScriptBindings(PyObject* module) {
     .def("propagate_and_assign_input_and_output_shapes", &Method::propagate_and_assign_input_and_output_shapes)
     .def("params", &Method::params)
     .def("graph_for", [](Method& self, py::args args) {
-      return self.graph_for(createVariableTensorList(args));
+      return self.graph_for(createStack(args));
     });
 
   m.def("_jit_script_compile", [](Def def, ResolutionCallback rcb) {
