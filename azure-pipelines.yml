@@ -39,6 +39,7 @@ jobs:
         .jenkins/pytorch/test.sh
       env:
         BUILD_ENVIRONMENT: pytorch-linux-xenial-cuda9-cudnn7-py3-test
+        USE_CUDA_DOCKER_RUNTIME: 1
       displayName: 'Test'
 
 # jobs:
