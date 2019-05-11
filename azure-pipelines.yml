@@ -22,8 +22,8 @@ jobs:
       submodules: "true"
     - bash: |
         set +x
-        sudo chown -R azureuser_azpcontainer:azureuser_azpcontainer /usr/local
-        sudo chown -R azureuser_azpcontainer:azureuser_azpcontainer /opt/python
+        sudo chown -R suo_azpcontainer:suo_azpcontainer /usr/local
+        sudo chown -R suo_azpcontainer:suo_azpcontainer /opt/python
         .jenkins/pytorch/build.sh
       env:
         BUILD_ENVIRONMENT: pytorch-linux-xenial-cuda9-cudnn7-py3-build
@@ -34,7 +34,7 @@ jobs:
     - bash: |
         set +x
         set -e
-        export PATH="/home/azureuser_azpcontainer/.local/bin:$PATH"
+        export PATH="/home/suo_azpcontainer/.local/bin:$PATH"
         .jenkins/pytorch/test.sh
       env:
         BUILD_ENVIRONMENT: pytorch-linux-trusty-py3.5-test
