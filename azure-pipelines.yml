@@ -24,6 +24,7 @@ jobs:
         set +x
         sudo chown -R suo_azpcontainer:suo_azpcontainer /usr/local
         sudo chown -R suo_azpcontainer:suo_azpcontainer /opt/python
+        sudo chown -R suo_azpcontainer:suo_azpcontainer /opt/conda
         .jenkins/pytorch/build.sh
       env:
         BUILD_ENVIRONMENT: pytorch-linux-xenial-cuda9-cudnn7-py3-build
