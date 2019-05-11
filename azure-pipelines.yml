@@ -8,10 +8,12 @@ trigger:
 
 jobs:
   - job:
-    pool: "Default"
+    pool:
+      name: "Default"
+      demands: "gpu"
     displayName: "Build and Test"
     container:
-      image: 308535385114.dkr.ecr.us-east-1.amazonaws.com/pytorch/pytorch-linux-trusty-py3.5:300
+      image: 308535385114.dkr.ecr.us-east-1.amazonaws.com/pytorch/pytorch-linux-xenial-cuda9-cudnn7-py3:300
       endpoint: aws_docker
       options: -u 0
     timeoutInMinutes: 120
@@ -24,7 +26,7 @@ jobs:
         sudo chown -R azureuser_azpcontainer:azureuser_azpcontainer /opt/python
         .jenkins/pytorch/build.sh
       env:
-        BUILD_ENVIRONMENT: pytorch-linux-trusty-py3.5-build
+        BUILD_ENVIRONMENT: pytorch-linux-xenial-cuda9-cudnn7-py3-build
         SCCACHE_BUCKET: "ossci-compiler-cache-circleci-v2"
         AWS_ACCESS_KEY_ID: $(SCCACHE_ACCESS_KEY_ID)
         AWS_SECRET_ACCESS_KEY: $(SCCACHE_SECRET)
@@ -37,3 +39,35 @@ jobs:
       env:
         BUILD_ENVIRONMENT: pytorch-linux-trusty-py3.5-test
       displayName: 'Test'
+
+# jobs:
+#   - job:
+#     pool: "Default"
+#     displayName: "Build and Test"
+#     container:
+#       image: 308535385114.dkr.ecr.us-east-1.amazonaws.com/pytorch/pytorch-linux-trusty-py3.5:300
+#       endpoint: aws_docker
+#       options: -u 0
+#     timeoutInMinutes: 120
+#     steps:
+#     - checkout: self
+#       submodules: "true"
+#     - bash: |
+#         set +x
+#         sudo chown -R azureuser_azpcontainer:azureuser_azpcontainer /usr/local
+#         sudo chown -R azureuser_azpcontainer:azureuser_azpcontainer /opt/python
+#         .jenkins/pytorch/build.sh
+#       env:
+#         BUILD_ENVIRONMENT: pytorch-linux-trusty-py3.5-build
+#         SCCACHE_BUCKET: "ossci-compiler-cache-circleci-v2"
+#         AWS_ACCESS_KEY_ID: $(SCCACHE_ACCESS_KEY_ID)
+#         AWS_SECRET_ACCESS_KEY: $(SCCACHE_SECRET)
+#       displayName: 'Build'
+#     - bash: |
+#         set +x
+#         set -e
+#         export PATH="/home/azureuser_azpcontainer/.local/bin:$PATH"
+#         .jenkins/pytorch/test.sh
+#       env:
+#         BUILD_ENVIRONMENT: pytorch-linux-trusty-py3.5-test
+#       displayName: 'Test'
