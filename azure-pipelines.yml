@@ -38,7 +38,7 @@ jobs:
         export PATH="/home/suo_azpcontainer/.local/bin:$PATH"
         .jenkins/pytorch/test.sh
       env:
-        BUILD_ENVIRONMENT: pytorch-linux-trusty-py3.5-test
+        BUILD_ENVIRONMENT: pytorch-linux-xenial-cuda9-cudnn7-py3-test
       displayName: 'Test'
 
 # jobs:
