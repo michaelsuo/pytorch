@@ -13,9 +13,11 @@ jobs:
       demands: "gpu"
     displayName: "Build and Test"
     container:
-      image: 308535385114.dkr.ecr.us-east-1.amazonaws.com/pytorch/pytorch-linux-xenial-cuda9-cudnn7-py3:300
-      endpoint: aws_docker
-      options: -u 0 --runtime=nvidia
+      image: http://pytorch.azurecr.io/tmp-lpmzxocpdogrtxhbleawtkoqukyezwwv:latest
+      endpoint: pytorch
+    #   image: 308535385114.dkr.ecr.us-east-1.amazonaws.com/pytorch/pytorch-linux-xenial-cuda9-cudnn7-py3:300
+    #   endpoint: aws_docker
+    #   options: -u 0 --runtime=nvidia
     timeoutInMinutes: 360
     steps:
     - checkout: self
