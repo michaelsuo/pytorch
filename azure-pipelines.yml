@@ -21,7 +21,8 @@ jobs:
     - checkout: self
       submodules: "true"
     - bash: |
-        set -ex
+        set -x
+        sudo chown -R /opt/conda
         # we should probably remove the sudo -E; this is because the container user
         # azure creates is not the same as the docker container owner, and chown -R'ing
         # everything takes a long time.
