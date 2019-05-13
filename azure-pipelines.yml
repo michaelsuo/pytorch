@@ -23,7 +23,10 @@ jobs:
     - bash: |
         set -ex
         echo $BUILD_ENVIRONMENT
-        sudo .jenkins/pytorch/build.sh
+        # we should probably remove the sudo -E; this is because the container user
+        # azure creates is not the same as the docker container owner, and chown -R'ing
+        # everything takes a long time.
+        sudo -E .jenkins/pytorch/build.sh
       env:
         BUILD_ENVIRONMENT: pytorch-linux-xenial-cuda9-cudnn7-py3-build
         SCCACHE_BUCKET: "ossci-compiler-cache-circleci-v2"
