@@ -22,10 +22,7 @@ jobs:
       submodules: "true"
     - bash: |
         set +x
-        sudo chown -R suo_azpcontainer:suo_azpcontainer /usr/local
-        sudo chown -R suo_azpcontainer:suo_azpcontainer /opt/python
-        sudo chown -R suo_azpcontainer:suo_azpcontainer /opt/conda
-        .jenkins/pytorch/build.sh
+        sudo .jenkins/pytorch/build.sh
       env:
         BUILD_ENVIRONMENT: pytorch-linux-xenial-cuda9-cudnn7-py3-build
         SCCACHE_BUCKET: "ossci-compiler-cache-circleci-v2"
