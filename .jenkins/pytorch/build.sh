@@ -6,6 +6,7 @@
 
 # shellcheck disable=SC2034
 COMPACT_JOB_NAME="${BUILD_ENVIRONMENT}"
+echo "Compact job name: $COMPACT_JOB_NAME"
 
 source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 
