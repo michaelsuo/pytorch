@@ -22,6 +22,7 @@ jobs:
       submodules: "true"
     - bash: |
         set -ex
+        echo $BUILD_ENVIRONMENT
         sudo .jenkins/pytorch/build.sh
       env:
         BUILD_ENVIRONMENT: pytorch-linux-xenial-cuda9-cudnn7-py3-build
