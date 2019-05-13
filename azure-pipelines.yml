@@ -25,7 +25,7 @@ jobs:
       submodules: "true"
     - bash: |
         set -x
-        id = $(id -u)
+        id=$(id -u)
         sudo chown -R $id:$id /opt/conda
         # we should probably remove the sudo -E; this is because the container user
         # azure creates is not the same as the docker container owner, and chown -R'ing
