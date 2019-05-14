@@ -16,8 +16,6 @@ jobs:
       image: pytorch.azurecr.io/tmp-lpmzxocpdogrtxhbleawtkoqukyezwwv:latest
       endpoint: pytorch
       options: -u 0 --runtime=nvidia
-    workspace:
-      clean: outputs
     #   image: 308535385114.dkr.ecr.us-east-1.amazonaws.com/pytorch/pytorch-linux-xenial-cuda9-cudnn7-py3:300
     #   endpoint: aws_docker
     #   options: -u 0 --runtime=nvidia
@@ -25,6 +23,7 @@ jobs:
     steps:
     - checkout: self
       submodules: "true"
+      clean: "all"
     - bash: |
         set -x
         id=$(id -u)
