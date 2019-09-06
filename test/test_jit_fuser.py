@@ -124,7 +124,7 @@ class TestFuser(JitTestCase):
         # run the kernel.
         @torch.jit.script
         def f(x, y):
-            return torch.cat([x + 2 * x + x ** 2, y + 4 * y + y ** 3], dim=0)
+            return torch.cat([x + 2*x+x ** 2, y + 4 * y + y ** 3], dim=0)
 
         # NOTE: y is broadcastable to x, but output of f(x, y) should have
         # shape 3x4, and not 4x4.
