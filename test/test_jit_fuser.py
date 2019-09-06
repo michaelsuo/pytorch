@@ -56,7 +56,7 @@ class TestFuser(JitTestCase):
         # TODO: add optionally enabled debug counters to the fuser to verify
         #       that we really can tell the difference between configurations
         def f(x, y):
-            z1, z2 = (x + y).chunk(2, dim=1)
+            z1, z2 = (x+y).chunk(2, dim=1)
             return z1 * z2
 
         x = torch.randn(4, 4, dtype=torch.float, device='cuda')
