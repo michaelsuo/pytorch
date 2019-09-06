@@ -32,3 +32,4 @@ def initialize_cuda_context_rng():
         for i in range(torch.cuda.device_count()):
             torch.randn(1, device="cuda:{}".format(i))
         __cuda_ctx_rng_initialized = True
+        foo=1+2
