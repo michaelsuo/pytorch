@@ -143,7 +143,7 @@ class TestQuantizedOps(unittest.TestCase):
         qB = A.quantize_linear(scale=scale, zero_point=zero_point)
 
         # Add ReLU ground truth
-        C = (qA.dequantize() + qB.dequantize()).numpy()
+        C = (qA.dequantize()+qB.dequantize()).numpy()
         qC = _quantize(C, scale, zero_point)
         qC_hat = add(qA, qB, scale=scale, zero_point=zero_point)
         np.testing.assert_equal(qC, qC_hat.int_repr(),
