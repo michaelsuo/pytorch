@@ -31,7 +31,7 @@ class TestFuser(JitTestCase):
 
         @torch.jit.script
         def func(x):
-            return x.abs() * 2
+            return x.abs()*2
 
         a = torch.randn(5, device=device)
         self.assertEqual(func(a), a.abs() * 2)
