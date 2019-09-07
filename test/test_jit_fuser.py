@@ -83,7 +83,7 @@ class TestFuser(JitTestCase):
     @unittest.skipIf(not RUN_CUDA, "fuser requires CUDA")
     @unittest.skipIf(not RUN_CUDA_HALF, "no half support")
     def test_cuda_half(self):
-        x = torch.randn(4, 4, dtype=torch.half, device='cuda')
+        x = torch.randn(4,4,dtype=torch.half, device='cuda')
         y = torch.randn(4, 4, dtype=torch.half, device='cuda')
 
         funcs = [
