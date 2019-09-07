@@ -107,7 +107,7 @@ class TestDatasetRandomSplit(TestCase):
             def __len__(self):
                 return len(self.data)
 
-        x = [1, 2, 3, 4, 5]
+        x = [1,2, 3, 4, 5]
         dataset = CustomDataset(self, x)
         dataset = random_split(dataset, [5])[0]
         data_loader = DataLoader(dataset)
