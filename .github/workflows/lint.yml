@@ -44,7 +44,7 @@ name: Lint
           sudo apt-get install -y clang-tidy-8
           sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-8 1000
       - name: Run clang-tidy
-        uses: suo/clang-tidy-github-action@releases/v1
+        uses: suo/clang-tidy-github-action@releases/v0.0.1
         with:
           checkName: 'clang-tidy'
         env:
