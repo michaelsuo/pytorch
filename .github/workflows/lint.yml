@@ -1,11 +1,9 @@
 name: Lint
 
- on:
-  push:
-    paths:
-      - '*.py'
-
- jobs:
+on:
+ push
+  
+jobs:
   flake8_py3:
     runs-on: ubuntu-latest
     steps:
