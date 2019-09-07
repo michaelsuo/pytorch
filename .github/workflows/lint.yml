@@ -25,7 +25,7 @@ jobs:
         with:
           checkName: 'flake8_py3'
           fileLocation: 'flake8_output.txt'
-          regex: '^(?<filename>.*?):(?<lineNumber>\\d+):(?<columnNumber>\\d+): (?<errorCode>\\w\\d+) (?<errorDesc>[\\s|\\w]*)'
+          regex: '^(?<filename>.*?):(?<lineNumber>\d+):(?<columnNumber>\d+): (?<errorCode>\w\d+) (?<errorDesc>[\s|\w]*)'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
