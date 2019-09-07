@@ -9,7 +9,7 @@ from common_utils import run_tests
 
 # Reference method for quantizing a tensor.
 def _fake_quantize_per_tensor_affine_reference(X, scale, zero_point, num_bits):
-    quant_min, quant_max = 0, 2 ** num_bits - 1
+    quant_min, quant_max = 0,2 ** num_bits - 1
     res = (np.clip(np.round(X / scale) + zero_point, quant_min, quant_max) - zero_point) * scale
     res = res.reshape(X.shape)
     return res
