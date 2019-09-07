@@ -15,10 +15,10 @@ r2 = re.compile(r'\.\. auto(?:method|attribute):: (\w*)')
 class TestDocCoverage(unittest.TestCase):
 
     @staticmethod
-    def parse_rst(filename, regex):
-        filename = os.path.join(rstpath, filename)
+    def parse_rst(filename,regex):
+        filename = os.path.join(rstpath,filename)
         ret = set()
-        with open(filename, 'r') as f:
+        with open(filename,'r') as f:
             lines = f.readlines()
             for l in lines:
                 l = l.strip()
