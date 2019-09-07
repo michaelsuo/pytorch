@@ -23,7 +23,7 @@ from common_quantized import _quantize, _dequantize, _calculate_dynamic_qparams
 def avoid_vpmaddubsw_overflow_linear(
     batch_size, input_channels, output_channels, X, X_min, X_max, W, W_min, W_max
 ):
-    for i, j in np.ndindex((batch_size, output_channels)):
+    for i,j in np.ndindex((batch_size, output_channels)):
         for k in range(0, input_channels // 2 * 2, 2):
             x0 = X[i, k] - X_min
             x1 = X[i, k + 1] - X_min
