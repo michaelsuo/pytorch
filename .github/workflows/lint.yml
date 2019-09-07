@@ -18,38 +18,42 @@ jobs:
         run: |
           set -eux
           pip install flake8
-          flake8 --exit-zero > ${GITHUB_WORKSPACE}/flake8_output.txt
+          flake8 --exit-zero > ${GITHUB_WORKSPACE}/flake8-output.txt
           cat ${GITHUB_WORKSPACE}/flake8_output.txt
       - name: Add annotations
         uses: suo/add-annotations-github-action@releases/v0.0.1
         with:
           checkName: 'flake8_py3'
-          fileLocation: 'flake8_output.txt'
+          fileLocation: 'flake8-output.txt'
           regex: '^(?<filename>.*?):(?<lineNumber>\d+):(?<columnNumber>\d+): (?<errorCode>\w\d+) (?<errorDesc>[\s|\w]*)'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-#   clang-tidy:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Setup Python
-#         uses: actions/setup-python@v1
-#         with:
-#           python-version: 3.7.4
-#           architecture: x64
-#       - name: Checkout PyTorch
-#         uses: actions/checkout@master
-#       - name: Install dependencies
-#         run: |
-#           pip install pyyaml
-#           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-#           sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main"
-#           sudo apt-get update
-#           sudo apt-get install -y clang-tidy-8
-#           sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-8 1000
-#       - name: Run clang-tidy
-#         uses: suo/clang-tidy-github-action@releases/v0.0.1
-#         with:
-#           checkName: 'clang-tidy'
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  clang-tidy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7.4
+          architecture: x64
+      - name: Checkout PyTorch
+        uses: actions/checkout@master
+      - name: Install dependencies
+        run: |
+          pip install pyyaml
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main"
+          sudo apt-get update
+          sudo apt-get install -y clang-tidy-8
+          sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-8 1000
+          ./tools/run-clang-tidy-in-ci.sh > ${GITHUB_WORKSPACE}/clang-tidy-output.txt
+          cat ${GITHUB_WORKSPACE}/clang-tidy-output.txt
+      - name: Add annotations
+        uses: suo/add-annotations-github-action@releases/v0.0.1
+        with:
+          checkName: 'clang-tidy'
+          fileLocation: 'clang-tidy-output.txt'
+          regex: '^(?<filename>.*?):(?<lineNumber>\d+):(?<columnNumber>\d+): (?<errorCode>\w\d+) (?<errorDesc>[\s|\w]*)'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
