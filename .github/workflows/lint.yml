@@ -49,9 +49,8 @@ jobs:
       - name: Checkout PR tip
         run: |
           set -eux
-          TIP_SHA=$(git rev-parse ${GITHUB_SHA}^2)
-          git checkout ${TIP_SHA}
-          echo ::set-output name=commit_sha::${TIP_SHA}
+          git checkout ${GITHUB_HEAD_REF}
+          echo ::set-output name=commit_sha::$(git rev-parse ${GITHUB_HEAD_REF})
         id: get_pr_tip
       - name: Install dependencies
         run: |
@@ -66,7 +65,7 @@ jobs:
           echo ${SYSTEM_PULLREQUEST_TARGETBRANCH}
           cat ${GITHUB_WORKSPACE}/clang-tidy-output.txt
         env:
-          SYSTEM_PULLREQUEST_TARGETBRANCH: ${{ steps.get_pr_tip.outputs.commit_sha }}
+          SYSTEM_PULLREQUEST_TARGETBRANCH: ${{ github.base_ref }}
       - name: Add annotations
         uses: suo/add-annotations-github-action@releases/v0.0.1
         with:
