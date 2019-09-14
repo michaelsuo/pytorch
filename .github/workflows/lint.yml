@@ -1,7 +1,10 @@
 name: Lint
 
 on:
- pull_request
+ - pull_request
+ - push:
+     branches:
+       - master
   
 jobs:
   flake8-py3:
@@ -17,8 +20,21 @@ jobs:
       - name: Checkout PR tip
         run: |
           set -eux
-          git checkout ${GITHUB_HEAD_REF}
-          echo ::set-output name=commit_sha::$(git rev-parse ${GITHUB_HEAD_REF})
+          if [[ -z "${GITHUB_HEAD_REF}" ]]; then
+            # If $GITHUB_HEAD_REF isn't set, 
+            #   then this workflow was triggered by a `push` event.
+            # Just use the triggering sha in this case.
+            TIP_SHA=${GITHUB_SHA}
+          else
+            # If $GITHUB_HEAD_REF is set, 
+            #   then this workflow was triggered by a `pull_request`.
+            # In that case, $GITHUB_SHA is set to a the PR merge ref,
+            # so we need to parse $GITHUB_HEAD_REF to get the actual PR tip.
+            TIP_SHA=$(git rev-parse ${GITHUB_HEAD_REF})
+          fi
+
+          git checkout ${TIP_SHA}
+          echo ::set-output name=commit_sha::${TIP_SHA}
         id: get_pr_tip
       - name: Run flake8
         run: |
