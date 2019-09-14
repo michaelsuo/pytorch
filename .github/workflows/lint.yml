@@ -17,10 +17,15 @@ jobs:
       - name: Checkout PR tip
         run: |
           set -eux
+          echo $FOO
+          echo $BAR
           TIP_SHA=$(git rev-parse ${GITHUB_SHA}^2)
           git checkout ${TIP_SHA}
           echo ::set-output name=commit_sha::${TIP_SHA}
         id: get_pr_tip
+        env:
+          FOO: ${{ github.head_ref	}}
+          BAR: ${{ github.base_ref	}}
       - name: Run flake8
         run: |
           set -eux
