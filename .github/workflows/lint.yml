@@ -20,9 +20,6 @@ jobs:
           git checkout ${GITHUB_HEAD_REF}
           echo ::set-output name=commit_sha::$(git rev-parse ${GITHUB_HEAD_REF})
         id: get_pr_tip
-        env:
-          FOO: ${{ github.head_ref	}}
-          BAR: ${{ github.base_ref	}}
       - name: Run flake8
         run: |
           set -eux
