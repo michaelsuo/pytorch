@@ -2,7 +2,10 @@ name: Lint
 
 on:
  pull_request
-  
+ push:
+   branches:
+     - master
+
 jobs:
   flake8-py3:
     runs-on: ubuntu-latest
