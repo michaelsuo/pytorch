@@ -5,7 +5,7 @@ on:
     branches:
     - master
   pull_request:
-  
+
 jobs:
   flake8-py3:
     runs-on: ubuntu-latest
@@ -20,8 +20,14 @@ jobs:
       - name: Checkout PR tip
         run: |
           set -eux
-          git checkout ${GITHUB_HEAD_REF}
-          echo ::set-output name=commit_sha::$(git rev-parse ${GITHUB_HEAD_REF})
+          if [ -z "${GITHUB_HEAD_REF}" ]; then
+            # We are on master, just set the SHA from our current location
+            echo ::set-output name=commit_sha::${GITHUB_SHA}
+          else
+            # We are on a PR, we need to check out PR branch
+            git checkout ${GITHUB_HEAD_REF}
+            echo ::set-output name=commit_sha::$(git rev-parse ${GITHUB_HEAD_REF})
+          fi
         id: get_pr_tip
       - name: Run flake8
         run: |
