@@ -65,7 +65,7 @@ jobs:
         id: get_pr_tip
       - name: Install dependencies
         run: |
-          set -ux
+          set -eux
           echo ${SYSTEM_PULLREQUEST_TARGETBRANCH}
           pip install pyyaml
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
