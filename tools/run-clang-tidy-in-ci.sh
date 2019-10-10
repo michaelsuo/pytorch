@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -x
 
 BASE_BRANCH=master
 if [[ $SYSTEM_PULLREQUEST_TARGETBRANCH ]]; then
