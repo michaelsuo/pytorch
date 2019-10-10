@@ -1017,8 +1017,10 @@ void initJitScriptBindings(PyObject* module) {
         return pythonResolver(rcb)->resolveType(name, range);
       });
 
-  py::class_<logging::LoggerBase, std::shared_ptr<logging::LoggerBase>>(
+
+     py::class_<logging::LoggerBase, std::shared_ptr<logging::LoggerBase>>(
       m, "LoggerBase");
+
   py::enum_<logging::LockingLogger::AggregationType>(m, "AggregationType")
       .value("SUM", logging::LockingLogger::AggregationType::SUM)
       .value("AVG", logging::LockingLogger::AggregationType::AVG)
