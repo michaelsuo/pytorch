@@ -109,7 +109,6 @@ jobs:
           # The negative filters below are to exclude files that include onnx_pb.h or
           # caffe2_pb.h, otherwise we'd have to build protos as part of this CI job.
           python tools/clang_tidy.py             \
-            --verbose                                 \
             --paths torch/csrc/                       \
             --diff "$BASE_BRANCH"                     \
             -g"-torch/csrc/jit/export.cpp"            \
@@ -121,7 +120,7 @@ jobs:
         env:
           SYSTEM_PULLREQUEST_TARGETBRANCH: ${{ github.base_ref }}
       - name: Add annotations
-        uses: suo/add-annotations-github-action@releases/v0.0.1
+        uses: suo/add-annotations-github-action@master
         with:
           check_name: 'clang-tidy'
           linter_output_path: 'clang-tidy-output.txt'
