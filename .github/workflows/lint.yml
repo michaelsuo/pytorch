@@ -73,7 +73,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y clang-tidy-8
           sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-8 1000
-      - name: Generate PyTorch files
+      - name: Run clang-tidy
         run: |
           set -eux
           BASE_BRANCH=master
@@ -107,11 +107,7 @@ jobs:
               --declarations-path build/aten/src/ATen/Declarations.yaml \
               --nn-path aten/src
           fi
-        env:
-          SYSTEM_PULLREQUEST_TARGETBRANCH: ${{ github.base_ref }}
-      - name: Run clang-tidy
-        run: |
-          set -eux
+
           # Run Clang-Tidy
           # The negative filters below are to exclude files that include onnx_pb.h or
           # caffe2_pb.h, otherwise we'd have to build protos as part of this CI job.
@@ -124,6 +120,8 @@ jobs:
             "$@" > ${GITHUB_WORKSPACE}/clang-tidy-output.txt
 
           cat ${GITHUB_WORKSPACE}/clang-tidy-output.txt
+        env:
+          SYSTEM_PULLREQUEST_TARGETBRANCH: ${{ github.base_ref }}
       - name: Add annotations
         uses: suo/add-annotations-github-action@master
         with:
