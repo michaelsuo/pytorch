@@ -146,7 +146,7 @@ jobs:
       - name: Checkout PR tip
         run: |
           set -eux
-          if [[ "${{ github.event_name }}" == "push"]]; then
+          if [[ "${{ github.event_name }}" == "push" ]]; then
             echo ${{ github.event.push.head.sha }}
             # We are on master, just set the SHA from our current location
             echo ::set-output name=commit_sha::${GITHUB_SHA}
